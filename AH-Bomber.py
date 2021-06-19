@@ -83,10 +83,8 @@ def warn():
 def login():
     try:
         global email
-        #email = e0.get()
-        #pswd = e1.get()
-        email = 'onavtytester@gmail.com'
-        pswd = 'onavty123456789'
+        email = e0.get()
+        pswd = e1.get()
         smtp_server = 'smtp.gmail.com'
         port = 587
         global server
