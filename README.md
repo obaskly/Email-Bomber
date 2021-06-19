@@ -1,4 +1,4 @@
-# Bomber
+# AH-Bomber V1.0
 
 Enable this option before you start sending:
 
