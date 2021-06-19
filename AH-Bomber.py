@@ -9,7 +9,7 @@ def main():
     root.geometry('250x480')
     root.title('Bomber')
     root.configure(background='black')
-    #messagebox.showinfo("Credits", ''.join('All Rights Reserved To Bropocalypse Team'))
+    messagebox.showinfo("Credits", ''.join('All Rights Reserved To Bropocalypse Team'))
 
     form = LabelFrame(root, text="Login", font='calibri 9 italic', background='black', foreground='cyan')
     form.grid(row=1, columnspan=2, sticky='WE', \
@@ -127,9 +127,9 @@ def attack(lab, var):
         messagebox.showerror("Error", ''.join('Make Sure The Less Secure Apps Option Is Enabled'))
 
 def load():
+    global memails
     with open('emails.txt','r') as emails:
         name = emails.read()
-        global memails
         memails = name.splitlines()
         messagebox.showinfo("", ''.join(f"Number Of Emails Is : {len(memails)}"))
 
