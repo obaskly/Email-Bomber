@@ -57,7 +57,7 @@ def main():
     b1.place(x=90, y=90)
     
     var = IntVar()
-    tok = "Email Sent : " + str(var.get())
+    tok = "Emails Sent : " + str(var.get())
     lab = Label(root, text=tok, background='black', foreground='white')
     lab.place(x=85, y=445)
 
@@ -105,7 +105,7 @@ def attack(lab, var):
             lol+=1
             server.sendmail(email,vemail,message)
             var.set(var.get()+1)
-            lab['text'] = 'Email Sent : ' + str(var.get())
+            lab['text'] = 'Emails Sent : ' + str(var.get())
             messagebox.showinfo("", ''.join('Done'))
 
     except smtplib.SMTPAuthenticationError:
@@ -131,7 +131,7 @@ def masssend(lab, var):
     try:
         server.sendmail(sender, recipients, text)
         var.set(var.get()+len(memails))
-        lab['text'] = 'Email Sent : ' + str(var.get())
+        lab['text'] = 'Emails Sent : ' + str(var.get())
         messagebox.showinfo("", ''.join('Done'))
     except smtplib.SMTPAuthenticationError:
         messagebox.showerror("Error", ''.join('Incorrect Username Or Password'))
