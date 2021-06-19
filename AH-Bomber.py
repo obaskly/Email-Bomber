@@ -7,7 +7,7 @@ def main():
     root = Tk()
     root.resizable(FALSE, FALSE)
     root.geometry('250x480')
-    root.title('Bomber')
+    root.title('AH-Bomber')
     root.configure(background='black')
     messagebox.showinfo("Credits", ''.join('All Rights Reserved To Bropocalypse Team'))
 
