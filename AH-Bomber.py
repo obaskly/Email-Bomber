@@ -4,6 +4,7 @@ from tkinter import messagebox
 from email.mime.text import MIMEText
 import smtplib, random, string
 
+
 def main():
     root = Tk()
     root.resizable(FALSE, FALSE)
